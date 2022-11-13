@@ -1,13 +1,12 @@
-import LogOut from "./LogOut";
+import LogOut from "../ui/LogOut";
 import Button from "../ui/Button";
-import InvenMang from "../ui/InventoryManagement";
-import AccMag from "../ui/AccounttManagement";
-import DeliveryStatus from "../ui/DeliveryStatus";
+import InvenMang from "../modal/InventoryManagement";
+import AccMag from "../modal/AccounttManagement";
+import DeliveryStatus from "../modal/DeliveryStatus";
 
 function EmployeePage() {
     return (
         <>
-            <LogOut />
             <InvenMang />
             <AccMag />
             <DeliveryStatus />

@@ -1,24 +1,27 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "./Button";
-import AddOrder from "./AddOrder";
+import AddOrder from "../modal/AddOrder";
 
-const Wrapper = styled.div`
-    width: calc(100% - 32px);
-    padding: 16px;
-    display: flex;
-    flex-direction: row;
-    align-item: center;
+const Wrapper = styled.span`
     text-align: center;
-    justify-content: space-around;
+    width: 20%;
+    height: 20%;
+    padding: 8px;
     border: 1px solid grey;
     boerder-radius: 8px;
     cursor: pointer;
     background: white;
+    .menu-hovered {
+        display: none;
+    }
     :hover {
         border: 5px solid red;
         transform: scale(1.2);
         background: grey;
+        .menu-hovered {
+            display: block;
+        }
     }
 `;
 
@@ -34,46 +37,28 @@ const DescriptionText = styled.p`
 
 function DishMenuListItem(props) {
     const { dish } = props;
-    const [isHovering, setIsHovering] = useState(false);
 
     const content =
-    
-        <table>
-            <tr>
-                <td colspan="2"><img src={dish.picture} alt="그림 없음" width="125px" height="125px" /></td>
-            </tr>
-            <tr>
-                <td><NameText>{dish.name}</NameText></td>
-                <td>{dish.price}원</td>
-            </tr>
-        </table>
-        ;
-
-    const hoveredcontent =
+        <>
             <table>
-            <tr>
-                <td colspan="2"><img src={dish.picture} alt="그림 없음" width="125px" height="125px" /></td>
-            </tr>
-            <tr>
-                <td><NameText>{dish.name}</NameText></td>
-                <td>{dish.price}원</td>
-            </tr>
-            <tr>
-                <td colspan="2"><DescriptionText>{dish.description}</DescriptionText></td>
-            </tr>
-            <tr>
-                <td colspan="2"><AddOrder dishid={dish.id} /></td>
-            </tr>
-        </table>
-        ;
+                <tr>
+                    <td colspan="2"><img src={dish.picture} alt="그림 없음" width="125px" height="125px" /></td>
+                </tr>
+                <tr>
+                    <td><NameText>{dish.name}</NameText></td>
+                    <td>{dish.price}원</td>
+                </tr>
+            </table>
+            <div class="menu-hovered">
+                <DescriptionText>{dish.description}</DescriptionText>
+                <AddOrder dishid={dish.id} />
+            </div>
+        </>;
 
-        
     return (
-        <div onMouseEnter={() => { setIsHovering(!isHovering) }} onMouseLeave={() => { setIsHovering(!isHovering) }}>
-            <Wrapper>
-                {isHovering ? hoveredcontent : content};
-            </Wrapper>
-        </div>
+        <Wrapper>
+            {content}
+        </Wrapper>
     );
 }
 
