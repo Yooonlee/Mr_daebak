@@ -11,29 +11,43 @@ function AddOrder(props) {
 
     const dish = Dishes.find((item) => { return item.id == dishid; });
 
-    const orderwindow = <>
-        <table>
+    const orderwindow =
+        <table width="400px">
             <tr>
-                <td colspan="2"><img src={dish.picture} alt="그림 없음" height="150px" /></td>
+                <td><img src={dish.picture} alt="그림 없음" height="150px" /></td>
             </tr>
             <tr>
-                <td>{dish.name}</td>
-                <td>{dish.price}</td>
+                <td>음식 이름: {dish.name}</td>
             </tr>
             <tr>
-                <td colspan="2">{dish.description}</td>
+                <td>가격: {dish.price}원</td>
             </tr>
             <tr>
-                <td><select name="style">
+                <td>{dish.description}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    형식:&nbsp;&nbsp;
+                    <select name="style">
                     <option value="simple">간단</option>
                     <option value="grand">보통</option>
                     <option value="delux">호화</option>
                 </select>
                 </td>
-                <td>갯수: <input type="text" name="amount" /></td>
             </tr>
-        </table><br />
-        <Button title="장바구니 넣기" onClick={toggleModal} /></>;
+            <tr>
+                <td>개수: <input type="text" name="amount" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td><Button title="장바구니 넣기" onClick={toggleModal} /></td>
+            </tr>
+        </table>;
 
     return (<>
         <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={orderwindow} />
