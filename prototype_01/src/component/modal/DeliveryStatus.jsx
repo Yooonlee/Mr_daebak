@@ -64,7 +64,7 @@ function DeliveryStatus(props) {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={deliverystatus} />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={deliverystatus} subUrl="deliverystatus" />
         <Button title="배달 관리" onClick={toggleModal} /></>
     );
 }

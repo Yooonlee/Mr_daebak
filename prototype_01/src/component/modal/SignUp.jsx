@@ -16,7 +16,7 @@ function SignUp() {
       <button type="submit">가입하기</button></form>;
 
   return (<>
-    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={signupform} />
+    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={signupform} subUrl="signup" />
     <Button title="회원가입" onClick={toggleModal} /></>
   )
 }

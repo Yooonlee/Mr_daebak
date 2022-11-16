@@ -50,7 +50,7 @@ function AddOrder(props) {
         </table>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={orderwindow} />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={orderwindow} subUrl="addorder" />
         <Button title="주문" onClick={toggleModal} /></>
     );
 }

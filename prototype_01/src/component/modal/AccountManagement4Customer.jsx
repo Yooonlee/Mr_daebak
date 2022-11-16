@@ -55,7 +55,7 @@ function AccMag4Cus() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={accmag4cus} />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={accmag4cus} subUrl="myaccount" />
         <Button title="내 정보" onClick={toggleModal} /></>
     )
 }

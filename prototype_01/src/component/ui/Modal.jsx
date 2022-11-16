@@ -1,10 +1,12 @@
 import ReactDOM from 'react-dom';
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 
-const Modal = ({ show, content, onCloseButtonClick}) => {
+const Modal = ({ show, content, onCloseButtonClick, subUrl }) => {
   if (!show) {
     return null;
+  } else {
+      history.replaceState(null, "", "/" + subUrl);
   }
 
   return ReactDOM.createPortal(

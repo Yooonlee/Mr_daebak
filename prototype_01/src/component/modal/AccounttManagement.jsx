@@ -58,7 +58,7 @@ function AccMag() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={accmag} />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={accmag} subUrl="accountmanagement" />
         <Button title="고객 정보" onClick={toggleModal} /></>
     )
 }

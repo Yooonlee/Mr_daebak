@@ -13,7 +13,7 @@ function LogIn() {
       <button type="submit">로그인</button></form>;
 
   return (<>
-    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={loginform} />
+    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={loginform} subUrl="login" />
     <Button title="로그인" onClick={toggleModal} /></>
   )
 }
