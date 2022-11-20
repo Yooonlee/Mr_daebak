@@ -7,15 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [isShowingModal, toggleModal] = useModal();
-  const [ID, setID] = useState("");
+
+  const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Address, setAddress] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Phone, setPhone] = useState("");
-  const navigate = useNavigate();
-  const onIDHandler = (event) => {
-    setID(event.currentTarget.value);
-    }
+ 
   const onPasswordHandler = (event) => {
     setPassword(event.currentTarget.value);
     }
@@ -25,10 +21,6 @@ function SignUp() {
   const onEmailHandler = (event) => {
     setEmail(event.currentTarget.value);
   }
-  const onPhoneHandler = (event) => {
-    setPhone(event.currentTarget.value);
-  }
-
   const onClickRegister = (event) => {
       
     event.preventDefault();
@@ -37,13 +29,11 @@ function SignUp() {
       password: Password,
       address: Address,
     }
-      // console.log(body);
-      // registerUser(body);
       registerUser(body);
   }
   let signupform =
     <form>
-      아이디: <input type="text" name="id" value={Email} onChange={onEmailHandler}/><br />
+      아이디: <input type="text" name="email" value={Email} onChange={onEmailHandler}/><br />
       비밀번호: <input type="password" name="pw" value={Password} onChange={onPasswordHandler}/><br />
       주소: <input type="address" name="address"  value={Address} onChange={onAddressHandler}/><br />
       <button type='button' onClick={onClickRegister}>회원가입</button>

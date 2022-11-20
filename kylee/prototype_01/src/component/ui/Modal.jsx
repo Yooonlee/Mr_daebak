@@ -6,7 +6,7 @@ const Modal = ({ show, content, onCloseButtonClick, subUrl }) => {
   if (!show) {
     return null;
   } else {
-      history.replaceState(null, "", "/" + subUrl);
+      window.history.replaceState(null, "", "/" + subUrl);
   }
 
   return ReactDOM.createPortal(

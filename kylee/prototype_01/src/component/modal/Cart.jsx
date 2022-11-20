@@ -1,9 +1,13 @@
 import Modal from "../ui/Modal";
 import useModal from "../ui/useModal";
 import Button from "../ui/Button";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Carts from "../database/Cart.json";
+import {Order}from "../../_actions/user_action"
+import axios from "axios";
+
 import styled from "styled-components";
+
 import Pay from "./Pay";
 
 const Wrapper = styled.div`
@@ -21,25 +25,48 @@ const Wrapper = styled.div`
 
 function Cart() {
     const [isShowingModal, toggleModal] = useModal();
+    const [cart, setCart] = useState("");
+    const [refresh, setRefresh] = useState("");
 
+    const CheckHandler = async (e) =>{
+        e.preventDefault();
+        setRefresh(!refresh);
+    }
+    const fetchData = async() => {
+        const response = await axios.get("http://localhost:8000/cart");
+        setCart(response.data);
+    };
+
+    useEffect( ()=>{fetchData()} ,[refresh]);
+
+    const onClickOrder = (event) => {
+        event.preventDefault();
+        Order(cart);
+    }
+    const cartlist = Object.values(cart)?.map((cartCon) => {
+        return(<div>
+            <table>
+                <tr>
+                    <td>주문 음식</td>
+                    <td>{cartCon.dinnerMenu}</td>
+                    <td>주문 형태</td>
+                    <td>{cartCon.dinnerStyle}</td>
+                    <td>주문 수량</td>
+                    <td>{cartCon.num}</td>
+                    <td>주문 가격</td>
+                    <td>{cartCon.price}</td>
+                </tr>
+                <tr>
+                    <td colSpan="4"><Button title="취소" /></td>
+                </tr>
+            </table>
+        </div>)
+    })
     let carts =
         <Wrapper>
-            {Carts.map((cart, index) => {
-                return (
-                    <table>
-                        <tr>
-                            <td>주문 음식</td>
-                            <td>{cart.dishname}</td>
-                            <td>주문 형태</td>
-                            <td>{cart.dishstyle}</td>
-                        </tr>
-                        <tr>
-                            <td colSpan="4"><Button title="취소" /></td>
-                        </tr>
-                    </table>
-                );
-            })}
-            <Pay />
+            {cartlist}
+            <Button title="결제" onClick={onClickOrder} />
+            <Button title="확인"onClick={CheckHandler}/>
         </Wrapper>;
 
     return (<>

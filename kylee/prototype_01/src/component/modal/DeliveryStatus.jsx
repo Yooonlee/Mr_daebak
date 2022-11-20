@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PrevOrders from "../database/PrevOrders.json"
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../ui/Modal";
 import useModal from "../ui/useModal";
 import Button from "../ui/Button";
 import styled from "styled-components";
+import axios from "axios";
+import {registerStatus}from "../../_actions/user_action"
+
 
 const Wrapper = styled.div`
     display: flex;
@@ -21,46 +24,80 @@ const Wrapper = styled.div`
 
 function DeliveryStatus(props) {
     const [isShowingModal, toggleModal] = useModal();
+    const [prevOrder, setPrevOrder] = useState("");
+    const [selectedStatus, setSelectedStatus] = useState("");
+    const [refresh, setRefresh] = useState("");
 
-    let deliverystatus =
-        <Wrapper>
-            {PrevOrders.map((prevoder, index) => {
+    const CheckHandler = async (e) =>{
+        e.preventDefault();
+        setRefresh(!refresh);
+    }
+    const onStatusHandler = (event) => {
+        setSelectedStatus(event.currentTarget.value)
+        }
+    const fetchData = async() => {
+        const response = await axios.get("http://localhost:8000/deliver");
+        setPrevOrder(response.data);
+        
+    };
+
+    useEffect( ()=>{fetchData()} ,[refresh]);
+
+    
+    const Prevorderlist = Object.values(PrevOrders)?.map((prevoderCon) => { //PrevOrders 대신 prevOrder 넣어야 함
+        const onClickChange = (event) => {
+            event.preventDefault();
+            let body = {
+              id: prevoderCon.customernumber,
+              time: prevoderCon.time,
+              dinnerMenu: prevoderCon.dishname,
+              dinnerStyle: prevoderCon.dishstyle,
+              status: selectedStatus
+              }
+              registerStatus(body);
+        }
                 return (
                     <table>
                         <tr>
                             <td>고객 번호: </td>
-                            <td>{prevoder.customernumber}</td>
+                            <td>{prevoderCon.customernumber}</td>
                         </tr>
                         <tr>
                             <td>시킨 시각: </td>
-                            <td>{prevoder.time}</td>
+                            <td>{prevoderCon.time}</td>
                         </tr>
                         <tr>
                             <td>시킨 음식: </td>
-                            <td>{prevoder.dishname}</td>
+                            <td>{prevoderCon.dishname}</td>
                         </tr>
                         <tr>
                             <td>시킨 형태: </td>
-                            <td>{prevoder.dishstyle}</td>
+                            <td>{prevoderCon.dishstyle}</td>
                         </tr>
                         <tr>
                             <td>현재 상태: </td>
-                            <td>{prevoder.status}</td>
+                            <td>{prevoderCon.status}</td>
                         </tr>
                         <tr>
                             <td>상태 바꾸기: </td>
-                            <td><select name="statusChange">
-                                <option value="waiting">대기</option>
-                                <option value="cooking">조리</option>
+                                <td>
+                                <select name="status" onChange ={onStatusHandler}>
+                                <option value="waiting" >대기</option>
+                                <option value="cooking" >조리</option>
                                 <option value="delivering">배송</option>
                                 <option value="completed">완료</option>
-                        </select></td>
+                                </select>
+                                </td>
                         </tr>
                         <tr>
-                            <td colSpan="2"><button type="submit">상태 수정 적용</button></td>
+                            <td colSpan="2"><button type="submit" onClick = {onClickChange}>상태 수정 적용</button></td>
                         </tr>
                     </table>);
-            })}
+            })
+    let deliverystatus =
+        <Wrapper>
+            {Prevorderlist}
+            <Button title="확인" onClick={CheckHandler} />
         </Wrapper>;
 
     return (<>
