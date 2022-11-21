@@ -61,8 +61,8 @@ function AddOrder(props) {
         <td colSpan="3">&nbsp;</td>
     </tr>
     <tr>
-        <td>
-            <fieldset colSpan="3">
+        <td colSpan="3">
+            <fieldset>
                 <legend>음식 형태</legend>
                 <input type="radio" value="simple" onClick={handleChange} checked={selectedStyle == "simple"} />보통
                 <input type="radio" value="grand" onClick={handleChange} checked={selectedStyle == "grand"} />고급

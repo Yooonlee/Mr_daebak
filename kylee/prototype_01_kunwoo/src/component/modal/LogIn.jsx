@@ -21,7 +21,8 @@ function LogIn() {
       email: Email,
       password: Password
     }
-    loginUser(body);
+      loginUser(body);
+      window.location.reload();
   }
   let loginform =
     <form> 

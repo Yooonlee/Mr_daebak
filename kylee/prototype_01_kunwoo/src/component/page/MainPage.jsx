@@ -23,12 +23,22 @@ import VoiceReconize from "../modal/VoiceReconize"
 const TopMenu = styled.div`
     padding: 16px;
     width: clac(100% - 32px);
-    background-color: red;
+    background-color: #e20c32;
     display: flex;
     flex-direction: row;
     align-item: center;
     justify-content: center;
 `;
+
+const MangingMenu = styled.div`
+     padding: 16px;
+     width: clac(100% - 32px);
+    background-color: #00d4fa;
+     display: flex;
+     flex-direction: row;
+     align-item: center;
+     margin-bottom:100px;
+ `;
 
 const MainPageMenuList = styled.div`
     padding-top: 50px;
@@ -63,7 +73,7 @@ function MainPage(props) {
                 { user.token ?  <><PrevOrderList /><Cart /><AccMag4Cus /><LogOut /><VoiceReconize /></> : <><LogIn /><SignUp /></>}
                 <Button title="확인"onClick={CheckHandler}/>
             </TopMenu>
-            { user.role !== 0 ? <TopMenu><EmployeePage role={user.role} /></TopMenu> : <></>}
+            {user.role !== 0 ? <MangingMenu><EmployeePage role={user.role} /></MangingMenu> : <></>}
             <MainPageMenuList>
                 <DishMenuList dishes={Dishes} isLogedin={user.token} />
             </MainPageMenuList>

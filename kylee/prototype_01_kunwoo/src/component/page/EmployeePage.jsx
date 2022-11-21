@@ -4,7 +4,7 @@ import InvenMang from "../modal/InventoryManagement";
 import AccMag from "../modal/AccounttManagement";
 import DeliveryStatus from "../modal/DeliveryStatus";
 
-function EmployeePage(role) {
+function EmployeePage({ role }) {
     if (role === 1) //������
     {
         return (<><InvenMang /><DeliveryStatus /></>);
