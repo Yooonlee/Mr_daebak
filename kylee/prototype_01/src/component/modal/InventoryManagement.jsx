@@ -35,7 +35,7 @@ function InvenMang() {
         setAmount(event.currentTarget.value);
         }
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/inven");
+        const response = await axios.get("http://localhost:8000/inventory");
         setInven(response.data);
         console.log(inven);
     };
