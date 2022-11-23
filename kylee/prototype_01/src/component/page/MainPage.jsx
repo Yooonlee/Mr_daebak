@@ -72,7 +72,7 @@ function MainPage(props) {
         <>
             <TopMenu>
                 <img src={require("../image/mrdaebak_logo.png")} height="50px" style={{ position: "absolute", top: "0.5rem", left: "20rem" }} />
-                { user.token ?  <><PrevOrderList /><Cart /><AccMag4Cus /><LogOut /><VoiceReconize /></> : <><LogIn /><SignUp /></>}
+                { user.token ?  <><PrevOrderList /><Cart /><AccMag4Cus /><LogOut /></> : <><VoiceReconize /><LogIn /><SignUp /></>}
                 <Button title="확인"onClick={CheckHandler}/>
             </TopMenu>
             { user.role > 0 ? <MangingMenu><EmployeePage role={user.role} /></MangingMenu> : <></>}

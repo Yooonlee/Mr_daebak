@@ -1,11 +1,14 @@
 import Modal from "../ui/Modal";
 import useModal from "../ui/useModal";
 import styled from "styled-components";
-import SpeechRecognition from 'react-speech-recognition'
+//import SpeechRecognition from 'react-speech-recognition'
 import { useState } from "react";
 import Dishes from "../database/Dishes.json"
 import * as GV from "../GlobalVariable.jsx"
 import { addOrder } from "../../_actions/user_action"
+import VoiceReconize2 from "./VoiceReconize2";
+
+var _ = require('lodash');
 
 function VoiceReconize() {
     const Mike = styled.button`
@@ -29,12 +32,14 @@ background-color: #50bcdf;
     //const [msg, setMsg] = useState("주문하실 음식을 말씀해 주세요.");
     const [final, setFinal] = useState("");
     const [isEnd, setIsEnd] = useState(false);
-    let dishname;
-    let dishstyle;
-    let firstanswer;
-    let secondanswer;
-    let temp;
+    let dishname = '';
+    let dishstyle = '';
+    let firstanswer = "";
+    let secondanswer = "";
+    let temp = '';
     let msg = <div>주문하실 음식을 말씀해 주세요.</div>;
+    let qone = false;
+    let qtwo = false;
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -53,44 +58,16 @@ background-color: #50bcdf;
 
     if (isShowingModal) {
         recognition.start();
-        A();
-    }
+        console.log(temp, dishname, dishstyle);
 
-    function A() {
         if (final == '스파게티') {
-            window.history.replaceState("", '', `./${final}`)
-            B();
-        }
-        
-    }
-    function B() {
-        msg = `${final}(을)를 주문하시겠습니까?
-            맞으면 예를, 아니면 화면을 닫고 다시 주문해 주세요.`;
-        if (final == '예') {
-            window.history.replaceState("", '', `./${final}`)
-            C();
+            temp = _.cloneDeep(final);
+            if(dishname != '스파게티') {dishname = _.cloneDeep(temp)};
+            console.log(temp, dishname, dishstyle);
+            VoiceReconize2(dishname, toggleModal);
         }
     }
-    function C() {
-        msg = `${final}의 형태를 말씀해주세요. 보통, 고급, 호화가 있습니다.`;
-        if (final == '보통' || final == '고급' || final == '호화') {
-            window.history.pushState("", null, `./${final}`)
-            D();
-        }
-    }
-    function D() {
-        msg = `${final}로 주문하시겠습니까?
-                    맞으면 예를, 아니면 화면을 닫고 다시 주문해 주세요.`;
-        if (final == '예') {
-            window.history.pushState("", null, `./${final}`)
-            E();
-        }
-    }
-    function E() {
-        msg = `${dishname}에 ${dishstyle}로 주문합니다.
-                        맞으면 예를, 아니면 화면을 닫고 다시 주문해 주세요.`;
-        if (final == '예') { recognition.stop(); }
-    }
+    
 
     if (!isShowingModal) { recognition.stop(); };
 
