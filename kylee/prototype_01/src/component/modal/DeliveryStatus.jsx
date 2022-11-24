@@ -35,9 +35,8 @@ function DeliveryStatus(props) {
         }
     
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/allorderlist");
-        console.log(response.data);
-        setPrev(response.data);
+        const response = await axios.get("http://localhost:8000/prevorders"); //allorderlist로 바꿀 예정?
+        setPrevOrder(response.data);
     };
 
     useEffect( ()=>{fetchData()} ,[refresh]);

@@ -30,6 +30,7 @@ function SignUp() {
       address: Address,
     }
       registerUser(body);
+      window.location.reload();
   }
   let signupform =
     <form>

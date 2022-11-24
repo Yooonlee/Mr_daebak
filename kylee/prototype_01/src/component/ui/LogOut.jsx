@@ -23,6 +23,7 @@ useEffect( ()=>{fetchData()} ,[]);
 const onClickLogout = (e) => {
   e.preventDefault();
   logout(logout2);
+  window.location.reload();
 }
 
   return (
