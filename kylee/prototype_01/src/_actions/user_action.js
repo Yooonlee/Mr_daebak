@@ -6,7 +6,6 @@ import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./types";
   // axios를 이용해 login 요청을 보내고 response.data를 반환하여 request에 넣어준다.
 
 export function loginUser(dataTosubmit) {
-  console.log(dataTosubmit)
   const request = axios
     .post("http://localhost:8000/login", dataTosubmit)
     .then((response) => response.data);
@@ -29,7 +28,6 @@ export function registerUser(dataTosubmit) {
 }
 
 export function addOrder(dataTosubmit) {
-  console.log(dataTosubmit)
   const request = axios
     .post("http://localhost:8000/menu", dataTosubmit)
     .then((response) => response.data);
@@ -40,9 +38,8 @@ export function addOrder(dataTosubmit) {
 }
 
 export function Order(dataTosubmit) {
-  console.log(dataTosubmit)
   const request = axios
-    .post("http://localhost:8000/cart", dataTosubmit)
+    .post("http://localhost:8000/cartnew", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
@@ -56,7 +53,6 @@ export async function useCustomerinfo() {
     .get("http://localhost:8000/customerinfo")
     .then((response) => {
       setToken(response.data);
-      console.log(token);
     }
     );
     return {
@@ -66,30 +62,25 @@ export async function useCustomerinfo() {
 
 }
 export function registerInven(dataTosubmit) {
-    console.log("registerInven 호출")
-    console.log(dataTosubmit)
-  // const request = axios
-  //   .post("http://localhost:8000/menu", dataTosubmit)
-  //   .then((response) => response.data);
-  // return {
-  //   type: REGISTER_USER,
-  //   payload: request,
-  // };
+  const request = axios
+    .post("http://localhost:8000/inventory", dataTosubmit)
+    .then((response) => response.data);
+  return {
+    type: REGISTER_USER,
+    payload: request,
+  };
 }
 
 export function registerStatus(dataTosubmit) {
-  // console.log("registerStatus 호출")
-  console.log(dataTosubmit)
-// const request = axios
-//   .post("http://localhost:8000/menu", dataTosubmit)
-//   .then((response) => response.data);
-// return {
-//   type: REGISTER_USER,
-//   payload: request,
-// };
+  const request = axios
+    .post("http://localhost:8000/prevorder", dataTosubmit)
+    .then((response) => response.data);
+  return {
+    type: REGISTER_USER,
+    payload: request,
+  };
 }
 export async function logout(dataTosubmit) {
-  console.log(dataTosubmit);
   const request = await axios
     .post("http://localhost:8000/logout", dataTosubmit)
     .then((response) => response.data);

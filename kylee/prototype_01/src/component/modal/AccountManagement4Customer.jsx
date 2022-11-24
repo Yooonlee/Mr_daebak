@@ -24,13 +24,19 @@ function AccMag4Cus() {
     const [userInfo, setUserInfo] = useState("");
     const [refresh, setRefresh] = useState("");
 
+    const CheckHandler = async (e) =>{
+        e.preventDefault();
+        setRefresh(!refresh);
+    }
     
     const fetchData = async() => {
         const response = await axios.get("http://localhost:8000/customerinfo");
         setUserInfo(response.data);
     };
-
     useEffect( ()=>{fetchData()} ,[refresh]);
+    
+    
+    const userinfomap = Object.values(user)?.map((value)  => {
 
     const CheckHandler = async (e) =>{
         e.preventDefault();

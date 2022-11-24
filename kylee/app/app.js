@@ -120,7 +120,7 @@ app.get("/auth", auth, (req, res) => {
 
 //LogOut
 app.post("/logout", (req, res) => {
-  User.findOneAndUpdate({ _id: req.body._id }, { token: "" }, (err, user) => {
+  User.findOneAndUpdate({ _id: req.body._id }, { $unset : { token : 1} }, (err, user) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).send({ success: true });
   });
@@ -136,11 +136,10 @@ app.post("/menu", (req, res) => {
   
   cart.save();
 
-  User.findOne( { token: { $ne: null } })
+  User.findOne( { token: { $ne: null }, role: { $ne: 77 } })
     .exec()// returns promise
     .then(theUser => {
       let myname = theUser.email;
-      console.log(myname);
       // let myaddress = theUser.address;
       return Cart.findOneAndUpdate( {_id : cart._id } , {email: myname});
       })
@@ -160,11 +159,10 @@ app.post("/menu", (req, res) => {
 app.get("/cart",  (req, res) => {
 
   
-  User.findOne( { token: { $ne: null } })
+  User.findOne( { token: { $ne: null }, role: { $ne: 77 } })
   .exec()
   .then(theUser => {
     let myname = theUser.email;
-    console.log(myname);
     return Cart.find({ email: myname });
   })
   .then(cart => {
@@ -174,13 +172,10 @@ app.get("/cart",  (req, res) => {
 });
 
 
-//이전 주문목록에 추가 
+//이전 주문목록에 추가 = 주문하기
 app.post("/cart", async (req, res) => {
   
-    
-    const prevorders = new PrevOrder(req.body);
-    // console.log(req.body);
-    prevorders.save((err, userInfo) => {
+    await PrevOrder.create( req.body ,(err) => {
       if (err) return res.json({ success: false, err });
   
       return res.status(200).json({
@@ -188,6 +183,7 @@ app.post("/cart", async (req, res) => {
       });
     });
     
+
     Cart.remove({}, (err, kitties) => {
       if(err) return res.json(err);
     });
@@ -244,20 +240,123 @@ app.post("/cart", async (req, res) => {
   
 });
 
-// 고객정보 보여주기
-app.get("/customerinfo",  (req, res) => {
+//주문하기 + 재고 변경
+app.post("/cartnew", async (req, res) => {
+  
+  await PrevOrder.create( req.body ,(err) => {
+    if (err) return res.json({ success: false, err });
 
+    return res.status(200).json({
+      success: true,
+    });
+  });
 
-  User.findOne( { token: { $ne: null } }, (err,user) =>{
-    if (!user) {
-      return res.json({
-        Success: false,
-        message: "해당하는 유저가 없습니다.",
-      });
+  const filter =  "637a0fb86f95953a1c09b161";
+
+  for(let item of req.body)
+  {
+    console.log(item.dinnerMenu);
+    let update = {};
+    if(item.dinnerMenu === "스파게티")
+    {
+      update = {$inc : {wine : -1, steak : -1 }};
     }
-    res.json(user);
+    else if(item.dinnerMenu === "스테이크")
+    {
+      update = ({$inc : {coffee : -1 , wine : -1, salad : -1, steak : -1 }});
+    } 
+    Inventory.findByIdAndUpdate(filter, update, (err, user) => {
+      if (err) return res.json({ success: false, err });
+      return res.status(200).send({ success: true });
+    });
+  }
+
+  
+  // const filter =  "637a0fb86f95953a1c09b161";
+  // if(req.body.dinnerMenu === "valentine")
+  // {
+  //   const update = ({$inc : {wine : -1 }}, {$inc : {steak : -1 }});
+  // }
+  // else if(req.body.dinnerMenu === "french")
+  // {
+  //   const update = ({$inc : {coffee : -1 }}, {$inc : {wine : -1 }}, {$inc : {salad : -1 }},{$inc : {steak : -1 }});
+  // }
+  // else if(req.body.dinnerMenu === "english")
+  // {
+  //   const update = ({$inc : {egg : -1 }}, {$inc : {bacon : -1 }}, {$inc : {bread : -1 }},{$inc : {steak : -1 }});
+  // }
+  // else
+  // {
+  //   const update = ({$inc : {shamp : -2 }}, {$inc : {baguette : -4 }}, {$inc : {coffee : -2 }},{$inc : {wine : -2 }}, {$inc : {steak : -2 }});
+  // }
+
+  
+
+  Cart.remove({}, (err, kitties) => {
+    if(err) return res.json(err);
   });
 });
+
+// 고객정보 보여주기
+app.get("/customerinfo",  (req, res) => {
+  User.findOne( { token: { $ne: null } } )
+  .exec()
+  .then(theUser => {
+    console.log(theUser);
+    let myname = theUser.email;
+    return User.find({ email: myname });
+  })
+  .then(user => {
+    res.json(user);
+  })
+  .catch(e => {
+    console.log('고객정보가 없습니다.', e)
+  })
+  
+
+//   User.findOne( { token: { $ne: null } }, (err,user) =>{
+//     if (!user) {
+//       return res.json({
+//         Success: false,
+//         message: "해당하는 유저가 없습니다.",
+//       });
+//     }
+//     res.json(user);
+//   });
+// });
+});
+
+// 고객정보 보여주기
+app.get("/allcustomerinfo",  (req, res) => {
+  User.findOne( { role : 0 } )
+  .exec()
+  .then(theUser => {
+    console.log(theUser);
+    let myname = theUser.email;
+    return User.find({ email: myname });
+  })
+  .then(user => {
+    res.json(user);
+  })
+  .catch(e => {
+    console.log('고객정보가 없습니다.', e)
+  })
+  
+});
+//회원 목록 삭제
+
+app.get("/customerdel",  (req, res) => {
+
+
+  User.remove({}, (err, kitties) => {
+    if(err) return res.json(err);
+  return res.status(200).send({ success: true });
+  });
+  
+});
+
+
+
 
 //고객정보 변경  
 app.post("/customerinfo", async (req, res) => {
@@ -277,53 +376,71 @@ app.post("/customerinfo", async (req, res) => {
 
 // 내 주문 목록 보여주기
 app.get("/myorderlist",  (req, res) => {
+ 
+    User.findOne( { token: { $ne: null }, role: 0 })
+    .exec()
+    .then(theUser => {
+      let myname = theUser.email;
+      return PrevOrder.find({ email: myname });
+    })
+    .then(prev => {
+      res.json(prev);
+    });
+  
+//   var myname ;
+//   User.findOne( { token: { $ne: null } }, (err,user) =>{
+//     if (!user) {
+//       return res.json({
+//         Success: false,
+//         message: "장바구니에 해당하는 유저가 없습니다.",
+//       });
+//     }
+//     myname = user.email;
+//   });
 
-  var myname ;
-  User.findOne( { token: { $ne: null } }, (err,user) =>{
-    if (!user) {
-      return res.json({
-        Success: false,
-        message: "장바구니에 해당하는 유저가 없습니다.",
-      });
-    }
-    myname = user.email;
-  });
-
-  PrevOrder.find({ email: myname }, (err, user) => {
-    if (!user) {
-      return res.json({
-        Success: false,
-        message: "장바구니에 해당하는 유저가 없습니다.",
-      });
-    }
-    res.json(user);
+//   PrevOrder.find({ email: myname }, (err, user) => {
+//     console.log(user);
+//     if (!user) {
+//       return res.json({
+//         Success: false,
+//         message: "장바구니에 해당하는 유저가 없습니다.",
+//       });
+//     }
+//     res.json(user);
+// });
 });
+
+// 모든 주문 목록 보여주기
+app.get("/allorderlist",  (req, res) => {
+ 
+  User.findOne( { role: 0 })
+  .exec()
+  .then(theUser => {
+    let myname = theUser.email;
+    return PrevOrder.find({ email: myname });
+  })
+  .then(prev => {
+    res.json(prev);
+  });
 });
 
 //재고 불러오기 
 app.get("/inventory",  (req, res) => {
 
-  Inventory.find( {}, (err,inventory) =>{
-    if (!inventory) {
-      return res.json({
-        Success: false,
-        message: "재고가 없습니다.",
-      });
-    }
-    res.json(inventory);
-  });
+  Inventory.find( {})
+  .then((inven) => {
+    return res.json(inven); 
+  } )    
 });
 
 //재고 변경  
 app.post("/inventory", async (req, res) => {
-  
-  const name2 = req.body.name;
-  const num = req.body.num;
-  const update = { [name2] : num };
-  const filter = {_id : "637a0fb86f95953a1c09b161"};// 어차피 인벤토리는 하나이기 때문에 데이터 삽입시 만들어진 아이디를 사용. 
+  console.log(req.body);
+  const update = req.body;
+  const filter =  "637a0fb86f95953a1c09b161";// 어차피 인벤토리는 하나이기 때문에 데이터 삽입시 만들어진 아이디를 사용. 
   
 
-  Inventory.findOneAndUpdate(filter, update, (err, user) => {
+  Inventory.findByIdAndUpdate(filter, update, (err, user) => {
     if (err) return res.json({ success: false, err });
     return res.status(200).send({ success: true });
   });
@@ -333,7 +450,7 @@ app.post("/inventory", async (req, res) => {
 //주문 목록 보여주기 
 app.get("/prevorders",  (req, res) => {
 
-  PrevOrder.find( {}, (err,prevorder) =>{
+  PrevOrder.find( { token: { $ne: null }, role: { $ne: 77 } }, (err,prevorder) =>{
     if (!prevorder) {
       return res.json({
         Success: false,
@@ -349,10 +466,10 @@ app.get("/prevorders",  (req, res) => {
 //주문 목록에서 status를 변경하기 
 app.post("/prevorder", async (req, res) => {
   
-  const cartid = req.body.id;
+  const cartid = req.body._id;
   const cartstatus = req.body.status;
   const update = { status : cartstatus };
-  const filter = {_id : cartid};// 어차피 인벤토리는 하나이기 때문에 데이터 삽입시 만들어진 아이디를 사용. 
+  const filter = {_id : cartid};
   
 
   PrevOrder.findOneAndUpdate(filter, update, (err, user) => {
@@ -361,6 +478,17 @@ app.post("/prevorder", async (req, res) => {
   });
 });
 
+//이전 주문 목록 삭제
+
+app.get("/prevorderdel",  (req, res) => {
+
+
+  PrevOrder.remove({}, (err, kitties) => {
+    if(err) return res.json(err);
+  return res.status(200).send({ success: true });
+  });
+  
+});
 
 
 // app.get('/', function (req, res) {

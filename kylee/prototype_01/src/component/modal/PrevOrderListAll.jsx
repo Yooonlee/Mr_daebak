@@ -29,7 +29,7 @@ function PrevOrderList() {
         setRefresh(!refresh);
     }
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/myorderlist");
+        const response = await axios.get("http://localhost:8000/allorderlist");
         console.log(response.data);
         setPrev(response.data);
     };
