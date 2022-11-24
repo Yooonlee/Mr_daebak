@@ -7,6 +7,13 @@ import Dishes from "../database/Dishes.json"
 import * as GV from "../GlobalVariable.jsx"
 import { addOrder } from "../../_actions/user_action"
 
+let dishname = [];
+let dishstyle = [];
+let firstanswer;
+let secondanswer;
+let temp;
+let msg = "주문하실 음식을 말씀해 주세요.\n취소하려면 아래 닫기를 눌러주세요.";
+
 function VoiceReconize() {
     const Mike = styled.button`
 position: fixed;
@@ -29,17 +36,12 @@ background-color: #50bcdf;
     //const [msg, setMsg] = useState("주문하실 음식을 말씀해 주세요.");
     const [final, setFinal] = useState("");
     const [isEnd, setIsEnd] = useState(false);
-    let dishname = [];
-    let dishstyle = [];
-    let firstanswer;
-    let secondanswer;
-    let temp;
-    let msg = <div>주문하실 음식을 말씀해 주세요.\n취소하려면 아래 닫기를 눌러주세요.</div>;
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     const menu = Dishes.map((dish, index) => dish.name);
     const style = Object.values(GV);
+    var cloneDeep = require('lodash.clonedeep');
 
     var recognition = new SpeechRecognition();
     recognition.continuous = true;
@@ -56,14 +58,21 @@ background-color: #50bcdf;
         A();
     }
     function A() {
-        console.log(final);
-        console.log(dishname);
+        console.log("a " + final);
+        console.log("a " + dishname[0]);
+        console.log("a " + dishstyle[0]);
         if (final == '스파게티') {
             dishname.push(final);
             msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n취소하려면 아래 닫기를 눌러주세요.`;
+            console.log("b " + final);
+            console.log("b " + dishname[0]);
+            console.log("b " + dishstyle[0]);
         }
-        if ((final == '보통' || final == '고급' || final == '호화') && (dishname[0] == '스파게티')) {
+        if ((final == '보통' || final == '고급' || final == '호화') && (dishname[0] === '스파게티')) {
             dishstyle.push(final);
+            console.log("c " + final);
+            console.log("c " + dishname[0]);
+            console.log("c " + dishstyle[0]);
             B();
         }
         function B() {
