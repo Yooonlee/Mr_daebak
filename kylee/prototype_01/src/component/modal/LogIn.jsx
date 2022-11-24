@@ -31,7 +31,7 @@ function LogIn() {
     </form>;
 
   return (<>
-    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={loginform} />
+    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={loginform} title="계정 접속" />
     <TopMenuButton title="로그인" onClick={toggleModal} /></>
   )
 }

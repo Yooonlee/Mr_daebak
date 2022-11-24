@@ -65,8 +65,8 @@ function PrevOrderList() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="prevorder" />
-        <TopMenuButton title="과거주문내역" onClick={toggleModal} /></>
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="prevorder" title="과거 주문 내역" />
+        <TopMenuButton title="과거 주문 내역" onClick={toggleModal} /></>
     )
 
 }

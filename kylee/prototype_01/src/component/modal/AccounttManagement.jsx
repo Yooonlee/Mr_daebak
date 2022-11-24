@@ -61,8 +61,8 @@ function AccMag4Cus() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfo}  />
-        <TopMenuButton title="모든고객정보" onClick={toggleModal} /></>
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfo} title="모든 계정 관리" />
+        <TopMenuButton title="모든 계정 정보" onClick={toggleModal} /></>
     )
 }
 
