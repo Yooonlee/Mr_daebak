@@ -73,7 +73,7 @@ function MainPage(props) {
                 { (user.token !== null)  && (user.role != 77)  ?  <><LogOut /><VoiceReconize /></> : <><LogIn /><SignUp /></>}
                 <Button title="확인"onClick={CheckHandler}/>
             </TopMenu>
-            { user.role > 0 ? <MangingMenu><EmployeePage role={user.role} /></MangingMenu> : <><PrevOrderList /><Cart /><AccMag4Cus /></>}
+            { user.role > 0 ? <MangingMenu><EmployeePage role={user.role} /></MangingMenu> : <TopMenu><PrevOrderList /><Cart /><AccMag4Cus /></TopMenu>}
             <MainPageMenuList>
                 <DishMenuList dishes={Dishes} isLogedin={user.token} />
             </MainPageMenuList>

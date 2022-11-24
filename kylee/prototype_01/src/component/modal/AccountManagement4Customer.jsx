@@ -34,14 +34,6 @@ function AccMag4Cus() {
         setUserInfo(response.data);
     };
     useEffect( ()=>{fetchData()} ,[refresh]);
-    
-    
-    const userinfomap = Object.values(user)?.map((value)  => {
-
-    const CheckHandler = async (e) =>{
-        e.preventDefault();
-        setRefresh(!refresh);
-    }
 
     const userinfomap = <Wrapper>
         <div>
@@ -71,8 +63,8 @@ function AccMag4Cus() {
         </Wrapper>; */
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfomap} subUrl="myaccount" />
-        <TopMenuButton title="나의정보" onClick={toggleModal} /></>
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfomap} subUrl="myaccount" title="내 정보" />
+        <TopMenuButton title="내 정보" onClick={toggleModal} /></>
     )
 }
 

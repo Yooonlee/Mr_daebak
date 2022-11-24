@@ -73,7 +73,7 @@ function Cart() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={carts} subUrl="carts" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={carts} subUrl="carts" title="장바구니" />
         <TopMenuButton title="장바구니" onClick={toggleModal} /></>
     )
 }

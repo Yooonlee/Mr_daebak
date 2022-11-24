@@ -181,7 +181,7 @@ function InvenMang() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="inventorymanagement" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="inventorymanagement" title="재고 관리" />
         <TopMenuButton title="재고 관리" onClick={toggleModal} />
         
         </>
