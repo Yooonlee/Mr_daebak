@@ -11,8 +11,11 @@ function VoiceReconize2(props) { //props: dishname, toggleModal
 
     let msg = `${props[0]}의 음식 형태를 골라주십시오. 보통, 고급, 호화가 있습니다.`;
 
-
-    return(<Modal show={isShowingModal} onCloseButtonClick={()=>{toggleModal; props[1]();}} content={msg} subUrl="voicereconize" title="음성인식" />);
+    function close() {
+        toggleModal();
+        props[1]();
+    }
+    return(<Modal show={isShowingModal} onCloseButtonClick={close} content={msg} subUrl="voicereconize" title="음성인식" />);
 }
 
 export default VoiceReconize2

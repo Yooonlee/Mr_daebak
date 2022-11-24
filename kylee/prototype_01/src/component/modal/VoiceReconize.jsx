@@ -6,9 +6,6 @@ import { useState } from "react";
 import Dishes from "../database/Dishes.json"
 import * as GV from "../GlobalVariable.jsx"
 import { addOrder } from "../../_actions/user_action"
-import VoiceReconize2 from "./VoiceReconize2";
-
-var _ = require('lodash');
 
 function VoiceReconize() {
     const Mike = styled.button`
@@ -32,14 +29,12 @@ background-color: #50bcdf;
     //const [msg, setMsg] = useState("주문하실 음식을 말씀해 주세요.");
     const [final, setFinal] = useState("");
     const [isEnd, setIsEnd] = useState(false);
-    let dishname = '';
-    let dishstyle = '';
-    let firstanswer = "";
-    let secondanswer = "";
-    let temp = '';
-    let msg = <div>주문하실 음식을 말씀해 주세요.</div>;
-    let qone = false;
-    let qtwo = false;
+    let dishname = [];
+    let dishstyle = [];
+    let firstanswer;
+    let secondanswer;
+    let temp;
+    let msg = <div>주문하실 음식을 말씀해 주세요.\n취소하려면 아래 닫기를 눌러주세요.</div>;
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -58,20 +53,28 @@ background-color: #50bcdf;
 
     if (isShowingModal) {
         recognition.start();
-        console.log(temp, dishname, dishstyle);
-
+        A();
+    }
+    function A() {
+        console.log(final);
+        console.log(dishname);
         if (final == '스파게티') {
-            temp = _.cloneDeep(final);
-            if(dishname != '스파게티') {dishname = _.cloneDeep(temp)};
-            console.log(temp, dishname, dishstyle);
-            VoiceReconize2(dishname, toggleModal);
+            dishname.push(final);
+            msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n취소하려면 아래 닫기를 눌러주세요.`;
+        }
+        if ((final == '보통' || final == '고급' || final == '호화') && (dishname[0] == '스파게티')) {
+            dishstyle.push(final);
+            B();
+        }
+        function B() {
+            msg = `${dishname[0]}에 ${dishstyle[0]}로 주문합니다.`;
+            setTimeout(() => { toggleModal(); }, 5000);
         }
     }
-    
 
-    if (!isShowingModal) { recognition.stop(); };
-
-    //const voicereconize = msg;
+    if (!isShowingModal) {
+        recognition.stop();
+    }
 
     return (<>
         <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={msg} subUrl="voicereconize" title="음성인식" />
