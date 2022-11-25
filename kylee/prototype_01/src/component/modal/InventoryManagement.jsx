@@ -51,7 +51,7 @@ function InvenMang() {
             });
     }
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/inventory");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/inventory");
         setInven(response.data);
     };
 
@@ -180,7 +180,7 @@ function InvenMang() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="inventorymanagement" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="inventorymanagement" title="재고 관리" />
         <TopMenuButton title="재고 관리" onClick={toggleModal} />
         
         </>

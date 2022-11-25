@@ -34,7 +34,7 @@ function Cart() {
     }
     
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/cart");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/cart");
         setCart(response.data);
     };
 
@@ -73,7 +73,7 @@ function Cart() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={carts} subUrl="carts" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={carts} subUrl="carts" title="장바구니" />
         <TopMenuButton title="장바구니" onClick={toggleModal} /></>
     )
 }

@@ -36,7 +36,7 @@ function DeliveryStatus(props) {
         setSelectedStatus(event.currentTarget.value)
         }
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/deliver");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/deliver");
         setPrevOrder(response.data);
         
     };

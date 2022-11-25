@@ -26,7 +26,7 @@ function Pay() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={pay} subUrl="pay" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={pay} subUrl="pay" title="결제" />
         <Button title="결제" onClick={toggleModal} /></>
     )
 }

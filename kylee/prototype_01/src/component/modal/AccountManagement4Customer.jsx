@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 
 function AccMag4Cus() {
     const [isShowingModal, toggleModal] = useModal();
-    const [user, setUser] = useState("");
+    const [userInfo, setUserInfo] = useState("");
     const [refresh, setRefresh] = useState("");
     const [formdata, setFormdata] = useState({
         emailOri:"",
@@ -48,10 +48,11 @@ function AccMag4Cus() {
         });
     };
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/customerinfo");
-        setUser(response.data);
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/customerinfo");
+        setUserInfo(response.data);
     };
     useEffect( ()=>{fetchData()} ,[refresh]);
+
 
     const userinfomap = Object.values(user)?.map((value)  => {
         const onClickChange = (event) => {
@@ -87,14 +88,16 @@ function AccMag4Cus() {
             </table>
         </div>)
     })
-    let userinfo =
+
+     let userinfo =
         <Wrapper>
             {userinfomap}
             <Button title="새로고침"onClick={CheckHandler}/>
-        </Wrapper>;
+        </Wrapper>; 
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfo}  />
+
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfo} subUrl="myaccount" title="내 정보" />
         <TopMenuButton title="내 정보" onClick={toggleModal} /></>
     )
 }

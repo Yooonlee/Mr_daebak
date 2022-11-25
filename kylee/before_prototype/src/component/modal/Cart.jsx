@@ -33,7 +33,7 @@ function Cart() {
         setRefresh(!refresh);
     }
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/cart");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/cart");
         setCart(response.data);
     };
 
