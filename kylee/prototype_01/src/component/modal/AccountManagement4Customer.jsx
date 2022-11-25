@@ -30,7 +30,7 @@ function AccMag4Cus() {
     }
     
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/customerinfo");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/customerinfo");
         setUserInfo(response.data);
     };
     useEffect( ()=>{fetchData()} ,[refresh]);

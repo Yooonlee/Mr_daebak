@@ -17,7 +17,7 @@ const { PrevOrder } = require("./src/models/PrevOrder");
 
 
 
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 //라우팅
 // const home = require("./src/routes/home");ㄱ
 // const mysql = require('mysql');
@@ -508,6 +508,6 @@ app.get("/prevorderdel",  (req, res) => {
 //   });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`);
+  console.log(`Example app listening at https://my-homepage-304618.du.r.appspot.com:${PORT}`);
 });
 module.exports = app;

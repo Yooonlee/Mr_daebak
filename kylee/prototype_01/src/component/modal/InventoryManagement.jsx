@@ -51,7 +51,7 @@ function InvenMang() {
             });
     }
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/inventory");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/inventory");
         setInven(response.data);
     };
 
