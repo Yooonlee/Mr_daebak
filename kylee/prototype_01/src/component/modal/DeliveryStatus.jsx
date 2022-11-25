@@ -35,7 +35,7 @@ function DeliveryStatus(props) {
         }
     
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/prevorders"); //allorderlist로 바꿀 예정?
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/prevorders"); //allorderlist로 바꿀 예정?
         setPrevOrder(response.data);
     };
 

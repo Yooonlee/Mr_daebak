@@ -60,7 +60,7 @@ function MainPage(props) {
 
     //const navigate = useNavigate();
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/customerinfo");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/customerinfo");
         console.log(response.data[0]);
         setUser(response.data[0]);
     };
@@ -73,7 +73,7 @@ function MainPage(props) {
                 { (user.token !== null)  && (user.role != 77)  ?  <><LogOut /><VoiceReconize /></> : <><LogIn /><SignUp /></>}
                 <Button title="확인"onClick={CheckHandler}/>
             </TopMenu>
-            { user.role > 0 ? <MangingMenu><EmployeePage role={user.role} /></MangingMenu> : <TopMenu><PrevOrderList /><Cart /><AccMag4Cus /></TopMenu>}
+            { (user.role > 0) && (user.role != 77) ? <MangingMenu><EmployeePage role={user.role} /></MangingMenu> : <TopMenu><PrevOrderList /><Cart /><AccMag4Cus /></TopMenu>}
             <MainPageMenuList>
                 <DishMenuList dishes={Dishes} isLogedin={user.token} />
             </MainPageMenuList>
