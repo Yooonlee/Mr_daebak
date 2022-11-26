@@ -19,6 +19,13 @@ let msg = `주문 가능 음식\n${menu}\n주문하실 음식을 말씀해 주�
 let sum;
 let body;
 
+let dishname = [];
+let dishstyle = [];
+let firstanswer;
+let secondanswer;
+let temp;
+let msg = "주문하실 음식을 말씀해 주세요.\n취소하려면 아래 닫기를 눌러주세요.";
+
 function VoiceReconize() {
     const Mike = styled.button`
 position: fixed;
@@ -62,6 +69,7 @@ background-color: #50bcdf;
         console.log("a " + final);
         console.log("a " + dishname[0]);
         console.log("a " + dishstyle[0]);
+        
         if (menu.includes(final)) {
             dishname.push(final);
             msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n취소하려면 아래 닫기를 눌러주세요.`;
@@ -69,11 +77,13 @@ background-color: #50bcdf;
             console.log("b " + dishname[0]);
             console.log("b " + dishstyle[0]);
         }
+
         if ((style.includes(final)) && (menu.includes(dishname[0]))) {
             dishstyle.push(final);
             console.log("c " + final);
             console.log("c " + dishname[0]);
             console.log("c " + dishstyle[0]);
+
             if (dishstyle === '보통' && dishname[0] === '샴페인 축제 디너') {
                 msg = `${dishname[0]}는 ${dishstyle[0]} 형식으로 주문할 수 없습니다.`;
                 dishname = [];
@@ -115,7 +125,7 @@ background-color: #50bcdf;
     }
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={msg} title="음성인식" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={msg} subUrl="voicereconize" title="음성인식" />
         <Mike onClick={toggleModal}>🎤</Mike>
     </>);
 }

@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 
 function DeliveryStatus(props) {
     const [isShowingModal, toggleModal] = useModal();
-    const [prev, setPrev] = useState("");
+    const [prevOrder, setPrevOrder] = useState("");
     const [selectedStatus, setSelectedStatus] = useState("");
     const [refresh, setRefresh] = useState("");
 
@@ -35,15 +35,14 @@ function DeliveryStatus(props) {
         }
     
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/allorderlist");
-        console.log(response.data);
-        setPrev(response.data);
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/prevorders"); //allorderlist로 바꿀 예정?
+        setPrevOrder(response.data);
     };
 
     useEffect( ()=>{fetchData()} ,[refresh]);
 
     
-    const Prevorderlist = Object.values(prev)?.map((order) => { 
+    const Prevorderlist = Object.values(prevOrder)?.map((order) => { 
         const onClickChange = (event) => {
             event.preventDefault();
             let body = {
@@ -94,8 +93,8 @@ function DeliveryStatus(props) {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={deliverystatus} subUrl="deliverystatus" />
-        <TopMenuButton title="배달 관리" onClick={toggleModal} /></>
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={deliverystatus} subUrl="deliverystatus" title="주문 관리" />
+        <TopMenuButton title="주문 관리" onClick={toggleModal} /></>
     );
 }
 
