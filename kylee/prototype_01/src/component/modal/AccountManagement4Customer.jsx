@@ -54,7 +54,7 @@ function AccMag4Cus() {
     useEffect( ()=>{fetchData()} ,[refresh]);
 
 
-    const userinfomap = Object.values(user)?.map((value)  => {
+    const userinfomap = Object.values(userInfo)?.map((value)  => {
         const onClickChange = (event) => {
             
             event.preventDefault();

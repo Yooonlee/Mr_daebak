@@ -9,6 +9,7 @@ import { addOrder } from "../../_actions/user_action";
 
 const menu = Dishes.map((dish, index) => dish.name);
 const style = Object.values(styleDic);
+let dishinfo;
 
 let dishname = [];
 let dishstyle = [];
@@ -18,13 +19,6 @@ let temp;
 let msg = `주문 가능 음식\n${menu}\n주문하실 음식을 말씀해 주세요.\n취소하려면 아래 닫기를 눌러주세요.`;
 let sum;
 let body;
-
-let dishname = [];
-let dishstyle = [];
-let firstanswer;
-let secondanswer;
-let temp;
-let msg = "주문하실 음식을 말씀해 주세요.\n취소하려면 아래 닫기를 눌러주세요.";
 
 function VoiceReconize() {
     const Mike = styled.button`
@@ -100,19 +94,15 @@ background-color: #50bcdf;
     }
 
     function Add() {
-        let sum = eval("dish.price" + dishstyle[0])
-        let body = {
+        dishinfo = Dishes.find((item) => { return item.name == dishname[0]; });
+        sum = eval("dishinfo.price" + dishstyle[0]);
+        body = {
          dinnerMenu: dishname[0],
          price: sum,
          dinnerStyle: dishstyle[0],
          num: 1
-        }
-        addOrder(body).payload.success
-        .then((res) => {
-            if(res === true)
-            {
-                alert('장바구니 등록 완료하였습니다.')
-            }})
+        };
+        addOrder(body).payload
         .catch(err => {
             console.log(err);
           });

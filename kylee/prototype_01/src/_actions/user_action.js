@@ -64,7 +64,7 @@ export async function useCustomerinfo() {
 
 export function changeCustomerinfo(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/customerinfo", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/customerinfo", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
