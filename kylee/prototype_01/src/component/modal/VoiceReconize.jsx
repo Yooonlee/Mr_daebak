@@ -41,7 +41,7 @@ background-color: #50bcdf;
     const [isShowingModal, toggleModal] = useModal();
     //const [msg, setMsg] = useState("주문하실 음식을 말씀해 주세요.");
     const [final, setFinal] = useState("");
-    const [isEnd, setIsEnd] = useState(false);
+    const [, updateState] = useState();
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -60,36 +60,29 @@ background-color: #50bcdf;
         A();
     }
     function A() {
-        console.log("a " + final);
-        console.log("a " + dishname[0]);
-        console.log("a " + dishstyle[0]);
         
         if (menu.includes(final)) {
             dishname.push(final);
-            msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n취소하려면 아래 닫기를 눌러주세요.`;
-            console.log("b " + final);
-            console.log("b " + dishname[0]);
-            console.log("b " + dishstyle[0]);
+            msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n샴페인 축제 디너에는 보통 형태가 없습니다.\n취소하려면 아래 닫기를 눌러주세요.`;
         }
 
         if ((style.includes(final)) && (menu.includes(dishname[0]))) {
             dishstyle.push(final);
-            console.log("c " + final);
-            console.log("c " + dishname[0]);
-            console.log("c " + dishstyle[0]);
-
-            if (dishstyle === '보통' && dishname[0] === '샴페인 축제 디너') {
-                msg = `${dishname[0]}는 ${dishstyle[0]} 형식으로 주문할 수 없습니다.`;
+            if (dishstyle[0] == '보통' && dishname[0] == '샴페인 축제 디너') {
                 dishname = [];
                 dishstyle = [];
-                msg = `주문 가능 음식\n${menu}\n주문하실 음식을 말씀해 주세요.\n취소하려면 아래 닫기를 눌러주세요.`;
+                updateState();
             }
             B();
         }
+
         function B() {
             Add();
             msg = `${dishname[0]}에 ${dishstyle[0]}(으)로 주문합니다.`;
             setTimeout(() => { toggleModal(); }, 5000);
+            recognition.stop();
+            dishname = [];
+            dishstyle = [];
         }
     }
 
@@ -107,12 +100,6 @@ background-color: #50bcdf;
             console.log(err);
           });
         }
-
-    if (!isShowingModal) {
-        recognition.stop();
-        dishname = [];
-        dishstyle = [];
-    }
 
     return (<>
         <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={msg} subUrl="voicereconize" title="음성인식" />

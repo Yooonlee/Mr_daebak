@@ -46,7 +46,7 @@ function DishMenuListItem(props) {
                 </tr>
                 <tr>
                     <td><NameText>{dish.name}</NameText></td>
-                    <td>{dish.pricesimple}원</td>
+                    <td>{dish.pricesimple ? dish.pricesimple원 : dish.pricegrand}</td>
                 </tr>
             </table>
             <div class="menu-hovered">
