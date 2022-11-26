@@ -69,7 +69,6 @@ background-color: #50bcdf;
         if ((style.includes(final)) && (menu.includes(dishname[0]))) {
             dishstyle.push(final);
             if (dishstyle[0] == '보통' && dishname[0] == '샴페인 축제 디너') {
-                dishname = [];
                 dishstyle = [];
                 updateState();
             }
