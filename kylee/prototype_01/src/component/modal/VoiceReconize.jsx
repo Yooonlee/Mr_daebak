@@ -41,7 +41,6 @@ background-color: #50bcdf;
     const [isShowingModal, toggleModal] = useModal();
     //const [msg, setMsg] = useState("주문하실 음식을 말씀해 주세요.");
     const [final, setFinal] = useState("");
-    const [, updateState] = useState();
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -60,7 +59,6 @@ background-color: #50bcdf;
         A();
     }
     function A() {
-        
         if (menu.includes(final)) {
             dishname.push(final);
             msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n샴페인 축제 디너에는 보통 형태가 없습니다.\n취소하려면 아래 닫기를 눌러주세요.`;
@@ -70,18 +68,17 @@ background-color: #50bcdf;
             dishstyle.push(final);
             if (dishstyle[0] == '보통' && dishname[0] == '샴페인 축제 디너') {
                 dishstyle = [];
-                updateState();
+            } else {
+                B();
             }
-            B();
         }
 
         function B() {
             Add();
-            msg = `${dishname[0]}에 ${dishstyle[0]}(으)로 주문합니다.`;
+            msg = `${dishname[0]}에 ${dishstyle[0]}(으)로 주문합니다.\n잠시 기다려 주십시오.`;
             setTimeout(() => { toggleModal(); }, 5000);
             recognition.stop();
-            dishname = [];
-            dishstyle = [];
+            window.location.reload();
         }
     }
 
