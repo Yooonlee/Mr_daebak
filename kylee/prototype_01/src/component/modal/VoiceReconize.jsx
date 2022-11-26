@@ -43,8 +43,17 @@ background-color: #50bcdf;
     const [final, setFinal] = useState("");
 
     var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var SpeechGrammarList = SpeechGrammarList || window.webkitSpeechGrammarList;
 
     var recognition = new SpeechRecognition();
+    if (SpeechGrammarList) {
+        // SpeechGrammarList is not currently available in Safari, and does not have any effect in any other browser.
+        // This code is provided as a demonstration of possible capability. You may choose not to use it.
+        var speechRecognitionList = new SpeechGrammarList();
+        var grammar = menu.join(' | ') + ' | ' + style.join(' | ') + ';'
+        speechRecognitionList.addFromString(grammar, 1);
+        recognition.grammars = speechRecognitionList;
+    }
     recognition.continuous = true;
     recognition.lang = 'ko-KR';
     recognition.interimResults = false;
@@ -61,7 +70,9 @@ background-color: #50bcdf;
     function A() {
         if (menu.includes(final)) {
             dishname.push(final);
-            msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n샴페인 축제 디너에는 보통 형태가 없습니다.\n취소하려면 아래 닫기를 눌러주세요.`;
+            msg = `${dishname[0]}의 형태를 말씀해주세요.\n보통, 고급, 호화가 있습니다.\n
+            샴페인 축제 디너에는 보통 형태가 없습니다.\n
+            취소하려면 아래 닫기를 눌러주세요.\n`;
         }
 
         if ((style.includes(final)) && (menu.includes(dishname[0]))) {
