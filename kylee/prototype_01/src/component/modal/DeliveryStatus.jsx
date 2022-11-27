@@ -35,7 +35,7 @@ function DeliveryStatus(props) {
         }
     
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/allorderlist");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/allorderlist");
         console.log(response.data);
         setPrev(response.data);
     };
@@ -70,7 +70,7 @@ function DeliveryStatus(props) {
                         </tr>
                         <tr>
                             <td colSpan="2" style={{ backgroundColor: "#d3d3d3" }}>주문 상태</td>
-                            <td colSpan="2">{order.status}</td>
+                            <td colSpan="2">{order.status == 'waiting' ? <>대기</> : (order.status == 'cancled' ? <>취소</> : (order.status == 'cooking' ? <>조리</> : (order.status == 'delivering' ? <>배달</> : <>배달 완료</>)))}</td>
                         </tr>
                         <tr>
                             <td>상태 바꾸기: </td>
@@ -94,7 +94,7 @@ function DeliveryStatus(props) {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={deliverystatus} subUrl="deliverystatus" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={deliverystatus} subUrl="deliverystatus" title="배달 관리" />
         <TopMenuButton title="배달 관리" onClick={toggleModal} /></>
     );
 }

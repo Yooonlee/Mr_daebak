@@ -30,6 +30,7 @@ function SignUp() {
       address: Address,
     }
       registerUser(body);
+      window.location.reload();
   }
   let signupform =
     <form>
@@ -39,7 +40,7 @@ function SignUp() {
       <button type='button' onClick={onClickRegister}>회원가입</button>
     </form>
   return (<>
-    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={signupform} subUrl="register"/>
+    <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={signupform} subUrl="register" title="회원 가입" />
     <TopMenuButton title="회원가입" onClick={toggleModal} /></>
   )
 }

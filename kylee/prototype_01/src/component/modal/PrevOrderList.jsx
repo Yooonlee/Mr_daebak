@@ -29,7 +29,7 @@ function PrevOrderList() {
         setRefresh(!refresh);
     }
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/myorderlist");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/myorderlist");
         console.log(response.data);
         setPrev(response.data);
     };
@@ -43,7 +43,7 @@ function PrevOrderList() {
                             <td style={{ backgroundColor: "#d3d3d3" }}>주문 음식</td>
                             <td>{order.dinnerMenu}</td>
                             <td style={{ backgroundColor: "#d3d3d3" }}>주문 스타일</td>
-                            <td>{order.dinnerStyle}</td>
+                            <td>{order.dinnerStyle == 'simple' ? <>보통</> : (order.dinnerStyle == 'grand' ? <>고급</> : <>호화</>)}</td>
                         </tr>
                         <tr>
                             <td style={{ backgroundColor: "#d3d3d3" }}>가격</td>
@@ -53,7 +53,7 @@ function PrevOrderList() {
                         </tr>
                         <tr>
                             <td colSpan="2" style={{ backgroundColor: "#d3d3d3" }}>주문 상태</td>
-                            <td colSpan="2">{order.status}</td>
+                            <td colSpan="2">{order.status == 'waiting' ? <>대기</> : (order.status == 'cancled' ? <>취소</> : (order.status == 'cooking' ? <>조리</> : (order.status == 'delivering' ? <>배달</> : <>배달 완료</>)))}</td>
                         </tr>
                     </table>
         </div>)
@@ -65,7 +65,7 @@ function PrevOrderList() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="prevorder" />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={prevorders} subUrl="prevorder" title="과거 주문" />
         <TopMenuButton title="과거주문내역" onClick={toggleModal} /></>
     )
 

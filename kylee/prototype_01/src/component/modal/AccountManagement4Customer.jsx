@@ -48,7 +48,7 @@ function AccMag4Cus() {
         });
     };
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/customerinfo");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/customerinfo");
         setUser(response.data);
     };
     useEffect( ()=>{fetchData()} ,[refresh]);
@@ -94,7 +94,7 @@ function AccMag4Cus() {
         </Wrapper>;
 
     return (<>
-        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfo}  />
+        <Modal show={isShowingModal} onCloseButtonClick={toggleModal} content={userinfo} title="내 정보" />
         <TopMenuButton title="내 정보" onClick={toggleModal} /></>
     )
 }

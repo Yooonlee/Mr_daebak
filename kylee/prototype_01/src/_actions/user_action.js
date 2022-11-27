@@ -7,7 +7,7 @@ import { LOGIN_USER, REGISTER_USER, AUTH_USER } from "./types";
 
 export function loginUser(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/login", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/login", dataTosubmit)
     .then((response) => response.data);
   return {
     //
@@ -19,7 +19,7 @@ export function loginUser(dataTosubmit) {
 //회원가입
 export function registerUser(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/register", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/register", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
@@ -29,7 +29,7 @@ export function registerUser(dataTosubmit) {
 
 export function addOrder(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/menu", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/menu", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
@@ -39,7 +39,7 @@ export function addOrder(dataTosubmit) {
 
 export function cancelCart(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/cancelcart", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/cancelcart", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
@@ -49,7 +49,7 @@ export function cancelCart(dataTosubmit) {
 
 export function Order(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/cartnew", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/cartnew", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
@@ -62,7 +62,7 @@ export function Order(dataTosubmit) {
 export async function useCustomerinfo() {
   const [token, setToken]= useState(null);
   const request = await axios
-    .get("http://localhost:8000/customerinfo")
+    .get("https://my-homepage-304618.du.r.appspot.com/customerinfo")
     .then((response) => {
       setToken(response.data);
     }
@@ -76,7 +76,7 @@ export async function useCustomerinfo() {
 
 export function changeCustomerinfo(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/customerinfo", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/customerinfo", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
@@ -86,7 +86,7 @@ export function changeCustomerinfo(dataTosubmit) {
 
 export function registerInven(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/inventory", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/inventory", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
@@ -96,16 +96,27 @@ export function registerInven(dataTosubmit) {
 
 export function registerStatus(dataTosubmit) {
   const request = axios
-    .post("http://localhost:8000/prevorder", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/prevorder", dataTosubmit)
     .then((response) => response.data);
   return {
     type: REGISTER_USER,
     payload: request,
   };
 }
+
+export function registerStatus2(dataTosubmit) {
+  const request = axios
+    .post("https://my-homepage-304618.du.r.appspot.com/cartrev", dataTosubmit)
+    .then((response) => response.data);
+  return {
+    type: REGISTER_USER,
+    payload: request,
+  };
+}
+
 export async function logout(dataTosubmit) {
   const request = await axios
-    .post("http://localhost:8000/logout", dataTosubmit)
+    .post("https://my-homepage-304618.du.r.appspot.com/logout", dataTosubmit)
     .then((response) => response.data);
   return {
     type: AUTH_USER,
@@ -115,7 +126,7 @@ export async function logout(dataTosubmit) {
 //인증처리
 export function auth() {
   const request = axios
-    .get("http://localhost:8000/auth")
+    .get("https://my-homepage-304618.du.r.appspot.com/auth")
     .then((response) => response.data);
   return {
     type: AUTH_USER,

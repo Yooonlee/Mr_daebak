@@ -60,7 +60,7 @@ function MainPage(props) {
 
     //const navigate = useNavigate();
     const fetchData = async() => {
-        const response = await axios.get("http://localhost:8000/customerinfo");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/customerinfo");
         console.log(response.data[0]);
         setUser(response.data[0]);
     };

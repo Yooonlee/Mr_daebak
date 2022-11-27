@@ -11,6 +11,7 @@ const ModalLegend = styled.legend`
 const Modal = ({ show, content, onCloseButtonClick, subUrl, title }) => {
 
   if (!show) {
+    window.history.replaceState(null, "", "/");
     return null;
   } else {
     window.history.replaceState(null, "", "./" + subUrl);
