@@ -85,7 +85,7 @@ background-color: #50bcdf;
         }
 
         function B() {
-            console.log(Add());
+            Add();
             addOrder(body).payload
                 .catch(err => {
                     console.log(err);

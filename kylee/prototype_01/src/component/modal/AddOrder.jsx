@@ -6,11 +6,12 @@ import useModal from "../ui/useModal";
 import { Button, TopMenuButton } from "../ui/Button";
 import {addOrder}from "../../_actions/user_action"
 import { useLocation } from 'react-router-dom';
+import axios from "axios";
 
 function AddOrder(props) {
     const { dishid, isLogedin } = props;
     const [isShowingModal, toggleModal] = useModal();
-
+    const [user, setUser] = useState("");
     const [dishCount, setDishCount] = useState(1);
     const dishPlusOne = () => {
         setDishCount((prev) => prev + 1);
@@ -18,6 +19,13 @@ function AddOrder(props) {
     const dishMinusOne = () => {
         setDishCount((prev) => prev - 1);
     }
+    //vip 가격 설정
+    const fetchData = async() => {
+        const response = await axios.get("my-homepage-304618.du.r.appspot.com/customerinfo");
+        console.log(response.data[0]);
+        setUser(response.data[0]);
+    };
+    useEffect( ()=>{fetchData()} ,[]);    
 
     const [selectedStyle, setSelectedStyle] = useState("simple");
     const handleChange = (event) => {
@@ -27,6 +35,10 @@ function AddOrder(props) {
     const onClickAddorder = (event) => {
         event.preventDefault();
         let sum = eval("dish.price" + selectedStyle)
+        if(user.isVip === "VIP")
+        {
+            sum = eval("dish.price" + selectedStyle)/2;    
+        }
         let body = {
          dinnerMenu: dish.name,
          price: sum,
@@ -48,7 +60,7 @@ function AddOrder(props) {
         <td colSpan="3">음식 이름: {dish.name}</td>
     </tr>
     <tr>
-        <td colSpan="3">가격: {eval("dish.price" + selectedStyle)}원</td>
+        {user.isVip === "VIP"?  <td colSpan="3">가격: {eval("dish.price" + selectedStyle)/2}원</td>:<td colSpan="3">가격: {eval("dish.price" + selectedStyle)}원</td>}
     </tr>
     <tr>
         <td colSpan="3">{dish.descriptioncommon}</td>
