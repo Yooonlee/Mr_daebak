@@ -21,7 +21,7 @@ function LogIn() {
       password: Password
     }
     loginUser(body);
-    //window.location.reload();
+    setTimeout(() => { window.location.reload(); }, 2000);
   }
   let loginform =
     <form> 

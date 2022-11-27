@@ -83,6 +83,9 @@ function AddOrder(props) {
                 </td>
             </tr>
     <tr>
+        <td colSpan="3">세부적인 주문 변경은<br />장바구니에서 가능합니다.</td>
+    </tr>
+    <tr>
         <td colSpan="3">&nbsp;</td>
     </tr>
     <tr>
