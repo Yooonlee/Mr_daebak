@@ -21,7 +21,7 @@ function AddOrder(props) {
     }
     //vip 가격 설정
     const fetchData = async() => {
-        const response = await axios.get("my-homepage-304618.du.r.appspot.com/customerinfo");
+        const response = await axios.get("https://my-homepage-304618.du.r.appspot.com/customerinfo");
         console.log(response.data[0]);
         setUser(response.data[0]);
     };
